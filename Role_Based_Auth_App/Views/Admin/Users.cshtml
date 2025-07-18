@@ -1,0 +1,135 @@
+﻿@model List<Role_Based_Auth_App.Models.UserModel>
+
+@{
+    var editUser = ViewBag.EditUser as UserModel;
+    var isEdit = editUser != null;
+}
+
+
+<h2>User Management</h2>
+
+<form method="post" asp-action="@(isEdit ? "Update" : "Add")" class="row g-3 mb-4">
+    @if (isEdit)
+    {
+        <input type="hidden" name="OriginalName" value="@editUser.Name" />
+    }
+
+    <div class="col-auto">
+        <input name="Name" class="form-control" placeholder="Username"
+               value="@(isEdit ? editUser.Name : "")" required @(isEdit ? "readonly" : "") />
+    </div>
+    <div class="col-auto">
+        <input name="Password" type="password" class="form-control" placeholder="Password"
+               value="@(isEdit ? editUser.Password : "")" required />
+    </div>
+    <div class="col-auto">
+        <select name="Role" class="form-select" required>
+            <option value="Admin" selected="@(isEdit && editUser.Role == "Admin")">Admin</option>
+            <option value="Manager" selected="@(isEdit && editUser.Role == "Manager")">Manager</option>
+            <option value="Employee" selected="@(isEdit && editUser.Role == "Employee")">Employee</option>
+        </select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-@(isEdit ? "success" : "primary")">
+            @(isEdit ? "Update User" : "Add User")
+        </button>
+
+        @if (isEdit)
+        {
+            <a asp-action="Users" class="btn btn-secondary ms-2">Cancel</a>
+        }
+    </div>
+</form>
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model) // Full list always shown
+        {
+            <tr>
+                <td>@user.Name</td>
+                <td>@user.Role</td>
+                <td>
+                    @if (user.Role != "Admin")
+                    {
+                        <a asp-action="Users" asp-route-username="@user.Name" class="btn btn-warning btn-sm me-2">Edit</a>
+                        <a asp-action="Remove" asp-route-username="@user.Name" class="btn btn-danger btn-sm">Remove</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (TempData["StatusMessage"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["StatusMessage"]
+    </div>
+}
+
+@* @model List<Role_Based_Auth_App.Models.UserModel>
+
+
+<h2>User Management</h2>
+
+<form method="post" asp-action="Add" class="row g-3 mb-4">
+    <div class="col-auto">
+        <input name="Name" class="form-control" placeholder="Username" required />
+    </div>
+    <div class="col-auto">
+        <input name="Password" type="password" class="form-control" placeholder="Password" required />
+    </div>
+    <div class="col-auto">
+        <select name="Role" class="form-select" required>
+            <option value="Admin">Admin</option>
+            <option value="Manager">Manager</option>
+            <option value="Employee">Employee</option>
+        </select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Add User</button>
+    </div>
+</form>
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Name</td>
+                <td>@user.Role</td>
+                <td>
+                    @if (user.Role != "Admin")
+                    {
+                        <a asp-action="Remove" asp-route-username="@user.Name" class="btn btn-danger btn-sm">Remove</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (TempData["StatusMessage"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["StatusMessage"]
+    </div>
+}
+
+
+
+ *@

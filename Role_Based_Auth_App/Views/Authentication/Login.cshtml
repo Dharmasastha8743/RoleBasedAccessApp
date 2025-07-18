@@ -1,0 +1,25 @@
+﻿<form method="post" style="max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px;">
+    <h4 style="text-align: center; margin-bottom: 20px;">Login</h4>
+
+    <div class="mb-3">
+        <input type="text" name="username" class="form-control" placeholder="Username" style="border: 1px solid #888; outline: none;" required />
+    </div>
+
+    <div class="mb-3">
+        <input type="password" name="password" class="form-control" placeholder="Password" style="border: 1px solid #888; outline: none;" required />
+    </div>
+
+    <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Login</button>
+    </div>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="text-danger">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+</form>
+

@@ -1,0 +1,11 @@
+﻿<h3>Submit Request</h3>
+<form asp-action="Submit" asp-controller="Employee" method="post">
+    <textarea name="content" class="form-control" required></textarea>
+    <br />
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-success">@TempData["Msg"]</div>
+}

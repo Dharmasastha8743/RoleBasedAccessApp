@@ -1,0 +1,58 @@
+﻿@{
+    var user = ViewBag.User as Role_Based_Auth_App.Models.UserModel;
+    var requests = ViewBag.Requests as List<Role_Based_Auth_App.Models.RequestModel>;
+}
+
+<h2>My Profile</h2>
+@if (user != null)
+{
+    <ul>
+        <li><strong>Name:</strong> @user.Name</li>
+        <li><strong>Role:</strong> @user.Role</li>
+    </ul>
+}
+else
+{
+    <p class="text-danger">User data not found.</p>
+}
+
+<hr />
+<h3>My Requests</h3>
+@if (requests != null && requests.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Request</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var req in requests)
+            {
+                <tr>
+                    <td>@req.Content</td>
+                    <td>
+                        @if (req.IsApproved && req.Status == "Approved")
+                        {
+                            <span class="text-success">Approved</span>
+                        }
+                        else if (!req.IsApproved && req.Status == "Rejected")
+                        {
+                            <span class="text-danger">Rejected</span>
+                            
+                        }
+                        else
+                        {
+                            <span class="text-warning">Pending</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No requests found.</p>
+}
