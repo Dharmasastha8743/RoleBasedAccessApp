@@ -1,17 +1,7 @@
 [
   {
-    "Name": "dharma",
+    "Name": "Admin",
     "Password": "123",
     "Role": "Admin"
-  },
-  {
-    "Name": "jessica",
-    "Password": "456",
-    "Role": "Manager"
-  },
-  {
-    "Name": "brock",
-    "Password": "789",
-    "Role": "Employee"
   }
 ]
